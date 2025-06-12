@@ -24,28 +24,22 @@ CREATE TABLE Vouchers (
 );
 GO
 
+--Tabla EstadoPedido
+CREATE TABLE EstadoPedido (
+    IDEstado INT IDENTITY(1,1) PRIMARY KEY NOT NULL,	
+	NombreEstado VARCHAR(50) NOT NULL
+);
+GO
+
 --Tabla de Pedidos
 CREATE TABLE Pedidos (
     IDPedido INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	IDEstado INT FOREIGN KEY REFERENCES EstadoPedido(IDEstado) NOT NULL,
 	IDCliente INT FOREIGN KEY REFERENCES Clientes(IDCliente) NOT NULL,
 	IDVoucher INT FOREIGN KEY REFERENCES Vouchers(IDVoucher),
 	PrecioFinalPedido MONEY NOT NULL,
 	FechaCreado DATE NOT NULL,
 	FechaEntregado DATE
-);
-GO
-
---Tabla Estados
-CREATE TABLE Estados (
-    IDEstado INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    NombreEstado VARCHAR(50) NOT NULL
-);
-GO
-
---Tabla EstadoPedido
-CREATE TABLE EstadoPedido (
-    IDPedido INT PRIMARY KEY FOREIGN KEY REFERENCES Pedidos(IDPedido) NOT NULL,
-    IDEstado INT FOREIGN KEY REFERENCES Estados(IDEstado) NOT NULL	
 );
 GO
 

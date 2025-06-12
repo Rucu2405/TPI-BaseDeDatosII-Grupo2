@@ -5,11 +5,15 @@ GO
 INSERT INTO Vouchers (Descuento) VALUES (10), (15), (20);
 GO
 
---Estados
-INSERT INTO Estados (NombreEstado) VALUES ('Pendiente'), ('En Proceso'), ('Entregado'), ('Cancelado');
+--EstadosPedido
+INSERT INTO EstadoPedido (NombreEstado) VALUES 
+('Pendiente'), 
+('En Proceso'), 
+('Entregado'), 
+('Cancelado');
 GO
 
---Categorias de buzos
+--Categorias
 INSERT INTO Categorias (Nombre) VALUES
 ('Buzos Cuello Redondo'),
 ('Buzos Con Capucha'),
@@ -49,42 +53,23 @@ INSERT INTO Clientes (DNI_Cliente, Nombre, Apellido, Direccion, CP, FechaNacimie
 (56789012, 'Luis', 'Fernández', 'Calle Estrella 321', 1420, '1982-06-15', 'luis.fernandez@mail.com');
 GO
 
---Pedidos 
-INSERT INTO Pedidos (IDCliente, IDVoucher, PrecioFinalPedido, FechaCreado, FechaEntregado) VALUES
-(1, 1, 2500, '2025-05-01', '2025-05-05'),
-(1, 2, 2700, '2025-05-03', '2025-05-08'),
-(2, NULL, 2600, '2025-05-05', NULL),
-(2, 1, 2400, '2025-05-06', '2025-05-10'),
-(3, 3, 5100, '2025-05-07', NULL),
-(3, NULL, 2500, '2025-05-10', '2025-05-15'),
-(4, 2, 2700, '2025-05-11', '2025-05-16'),
-(4, NULL, 2400, '2025-05-13', NULL),
-(5, 1, 2500, '2025-05-15', '2025-05-20'),
-(5, 3, 2550, '2025-05-16', NULL),
-(1, NULL, 2600, '2025-05-18', '2025-05-22'),
-(2, 2, 2400, '2025-05-20', NULL),
-(3, 1, 2550, '2025-05-22', '2025-05-27'),
-(4, 3, 2700, '2025-05-24', NULL),
-(5, NULL, 2600, '2025-05-26', '2025-05-30');
-GO
-
---EstadoPedido
-INSERT INTO EstadoPedido (IDPedido, IDEstado) VALUES
-(1, 3),
-(2, 2),
-(3, 1),
-(4, 4),
-(5, 1),
-(6, 3),
-(7, 4),
-(8, 1),
-(9, 3),
-(10, 2),
-(11, 3),
-(12, 1),
-(13, 4),
-(14, 1),
-(15, 3);
+--Pedidos
+INSERT INTO Pedidos (IDEstado, IDCliente, IDVoucher, PrecioFinalPedido, FechaCreado, FechaEntregado) VALUES
+(3, 1, 1, 2500, '2025-05-01', '2025-05-05'),
+(2, 1, 2, 2700, '2025-05-03', '2025-05-08'),
+(1, 2, NULL, 2600, '2025-05-05', NULL),
+(4, 2, 1, 2400, '2025-05-06', '2025-05-10'),
+(1, 3, 3, 5100, '2025-05-07', NULL),
+(3, 3, NULL, 2500, '2025-05-10', '2025-05-15'),
+(4, 4, 2, 2700, '2025-05-11', '2025-05-16'),
+(1, 4, NULL, 2400, '2025-05-13', NULL),
+(3, 5, 1, 2500, '2025-05-15', '2025-05-20'),
+(2, 5, 3, 2550, '2025-05-16', NULL),
+(3, 1, NULL, 2600, '2025-05-18', '2025-05-22'),
+(1, 2, 2, 2400, '2025-05-20', NULL),
+(4, 3, 1, 2550, '2025-05-22', '2025-05-27'),
+(1, 4, 3, 2700, '2025-05-24', NULL),
+(3, 5, NULL, 2600, '2025-05-26', '2025-05-30');
 GO
 
 --DetallePedido 
@@ -105,3 +90,4 @@ INSERT INTO DetallePedido (IDPedido, IDProducto, Cantidad, PrecioXCantidad) VALU
 (13, 5, 1, 2550),
 (14, 2, 1, 2700),
 (15, 3, 1, 2600);
+GO
