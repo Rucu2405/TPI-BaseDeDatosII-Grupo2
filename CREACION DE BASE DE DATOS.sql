@@ -1,5 +1,6 @@
 --Crear base de datos
 CREATE DATABASE TPI_GP02
+collate Latin1_General_CI_AI
 GO
 USE TPI_GP02
 GO
@@ -37,8 +38,7 @@ CREATE TABLE Pedidos (
 	IDEstado INT FOREIGN KEY REFERENCES EstadoPedido(IDEstado) NOT NULL,
 	IDCliente INT FOREIGN KEY REFERENCES Clientes(IDCliente) NOT NULL,
 	IDVoucher INT FOREIGN KEY REFERENCES Vouchers(IDVoucher),
-	PrecioFinalPedido MONEY NOT NULL,
-	FechaCreado DATE NOT NULL,
+	FechaCreado DATE NOT NULL default GETDATE(),
 	FechaEntregado DATE
 );
 GO
@@ -46,7 +46,7 @@ GO
 --Tabla Categorías
 CREATE TABLE Categorias (
     IDCategoria INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	Nombre VARCHAR(50) NOT NULL
+	DescripcionCategoria VARCHAR(50) NOT NULL
 );
 GO
 
@@ -82,8 +82,7 @@ CREATE TABLE DetallePedido (
     IDDetallePedido INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	IDPedido INT FOREIGN KEY REFERENCES Pedidos(IDPedido) NOT NULL,
 	IDProducto INT FOREIGN KEY REFERENCES Productos(IDProducto) NOT NULL,
-	Cantidad INT NOT NULL,
-	PrecioXCantidad MONEY NOT NULL
+	Cantidad INT NOT NULL
 );
 
 

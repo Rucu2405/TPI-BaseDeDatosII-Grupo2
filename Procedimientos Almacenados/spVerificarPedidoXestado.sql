@@ -1,5 +1,4 @@
-CREATE PROCEDURE spVerificarPedidosXestado (@idestado INT = null)    
-
+Create PROCEDURE spVerificarPedidosXestado (@idestado INT = null)    
 AS    
 BEGIN
 
@@ -14,7 +13,7 @@ BEGIN
         /* Validamos que el estado exista */
         IF @idestado < 1 OR @idestado > 4    
         BEGIN    
-            RAISERROR('Ingrese un estado entre 1 y 4: 1-Pendiente, 2-En Proceso, 3-Entregado, 4-Cancelado.', 12, 1)    
+            RAISERROR('Ingrese un estado de los disponibles : 1-Pendiente, 2-En Proceso, 3-Entregado, 4-Cancelado.', 12, 1)    
             RETURN    
         END    
     
@@ -24,16 +23,15 @@ BEGIN
             EP.NombreEstado,    
             C.Nombre + ' ' + C.Apellido AS [Nombre y Apellido Cliente],    
             C.DNI_Cliente,    
-            C.Mail,    
-            V.Descuento    
+            C.Mail   
         FROM Pedidos AS P    
         INNER JOIN EstadoPedido AS EP ON P.IDEstado = EP.IDEstado    
         INNER JOIN Clientes AS C ON P.IDCliente = C.IDCliente    
-        LEFT JOIN Vouchers AS V ON P.IDVoucher = V.IDVoucher    
         WHERE P.IDEstado = @idestado    
         ORDER BY C.DNI_Cliente    
     
-        -- contamos los pedidos, si no hay, se informa que no tenemos pedidos con el estado a buscar. 
+        /* contamos los pedidos, si no hay, se informa que no tenemos pedidos con el estado a buscar. */
+
         IF @@ROWCOUNT = 0    
         BEGIN    
             PRINT 'No hay pedidos con el estado ingresado.'    
