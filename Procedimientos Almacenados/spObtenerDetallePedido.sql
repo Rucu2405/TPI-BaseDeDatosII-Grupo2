@@ -1,4 +1,4 @@
-ALTER PROCEDURE spObtenerDetallePedido
+CREATE OR ALTER PROCEDURE spObtenerDetallePedido
    ( @IDPedido INT = NULL,
    @infoCliente INT = NULL
    )
