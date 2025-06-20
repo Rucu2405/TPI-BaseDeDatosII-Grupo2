@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE spAgregarProducto
+CREATE OR ALTER PROCEDURE sp_AgregarProducto
 (
     @NombreProducto VARCHAR(100) = NULL,
     @IDCategoria INT = NULL,

@@ -1,4 +1,4 @@
-Create OR Alter PROCEDURE spVerificarPedidosXestado (@idestado INT = null)    
+Create OR Alter PROCEDURE sp_VerificarPedidosXestado (@idestado INT = null)    
 AS    
 BEGIN
 
