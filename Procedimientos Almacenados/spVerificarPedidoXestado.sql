@@ -6,14 +6,14 @@ BEGIN
         /* Validamos si no se envia un parametro para el estado, se informan los disponibles */  
         IF @idestado IS NULL    
         BEGIN    
-            RAISERROR('Debe ingresar un valor para el estado: 1-Pendiente, 2-En Proceso, 3-Entregado, 4-Cancelado.', 12, 1)    
+            RAISERROR('Debe ingresar un valor para el estado: 1-Pendiente, 2-Enviado, 3-Entregado, 4-Cancelado.', 12, 1)    
             RETURN    
         END    
     
         /* Validamos que el estado exista */
         IF @idestado < 1 OR @idestado > 4    
         BEGIN    
-            RAISERROR('Ingrese un estado de los disponibles : 1-Pendiente, 2-En Proceso, 3-Entregado, 4-Cancelado.', 12, 1)    
+            RAISERROR('Ingrese un estado de los disponibles : 1-Pendiente, 2-Enviado, 3-Entregado, 4-Cancelado.', 12, 1)    
             RETURN    
         END    
     
