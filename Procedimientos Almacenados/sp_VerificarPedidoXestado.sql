@@ -21,7 +21,7 @@ BEGIN
         SELECT     
             P.IDPedido,    
             EP.NombreEstado,    
-            C.Nombre + ' ' + C.Apellido AS [Nombre y Apellido Cliente],    
+            C.Nombre + ' ' + C.Apellido AS 'Nombre y Apellido Cliente',    
             C.DNI_Cliente,    
             C.Mail   
         FROM Pedidos AS P    
