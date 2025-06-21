@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE spObtenerDetallePedido
+CREATE OR ALTER PROCEDURE sp_ObtenerDetallePedido
    ( @IDPedido INT = NULL,
    @infoCliente INT = NULL
    )
@@ -19,6 +19,16 @@ BEGIN
             RAISERROR(@mensaje, 12, 1);
             RETURN    
         END  
+
+		/* Verificamos existencia del pedido */
+        IF NOT EXISTS (SELECT 1 FROM Pedidos WHERE IDPedido = @IDPedido)
+        BEGIN
+		SET @mensaje = 'No existe ese pedido.'+CHAR(13) + CHAR(10) + 
+					   'Verifique cuales son con (Select * from Pedidos)'
+            RAISERROR(@mensaje, 12, 1);
+	         RETURN
+        END
+
 
 		 /* Obtengo descuento del voucher del pedido (isnull si no tiene descuento, le asigna 0 */
         DECLARE @descuento smallint = 
@@ -47,10 +57,12 @@ BEGIN
 			PR.Descripcion,
 			DP.Cantidad,
 			'$ ' + FORMAT(PR.Precio,'N2')AS 'Precio Unitario',
-			'$ ' + FORMAT((PR.Precio * DP.Cantidad), 'N2') AS SubtotalProducto
+			'$ ' + FORMAT((PR.Precio * DP.Cantidad), 'N2') AS SubtotalProducto,
+			CAST(@descuento AS VARCHAR) + '%' AS 'Este pedido tiene descuento del :'
 			FROM DetallePedido AS DP
 			INNER JOIN Productos AS PR ON DP.IDProducto = PR.IDProducto
 			INNER JOIN Pedidos AS PE ON DP.IDPedido=PE.IDPedido 
+			
 				WHERE DP.IDPedido = @IDPedido
 				ORDER BY DP.Cantidad DESC;
 
