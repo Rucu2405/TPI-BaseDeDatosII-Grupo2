@@ -1,5 +1,7 @@
+
 USE TPI_GP02
 GO
+
 
 --Vouchers
 INSERT INTO Vouchers (Descuento) VALUES (10), (15), (20);
