@@ -6,7 +6,8 @@ SELECT TOP 5
     C.Nombre + ' ' + C.Apellido AS Cliente,
     COUNT(DISTINCT P.IDPedido) AS CantidadPedidos,
     SUM(DP.Cantidad) AS TotalProductosComprados,
-    CAST(SUM((PR.Precio * DP.Cantidad) - ((PR.Precio * DP.Cantidad) * ISNULL(V.Descuento, 0) / 100)) AS MONEY) AS TotalGastado
+     '$ ' + CONVERT(VARCHAR,CAST(SUM((PR.Precio * DP.Cantidad) - ((PR.Precio * DP.Cantidad) * ISNULL(V.Descuento, 0) / 100)) 
+           AS MONEY), 1) AS TotalGastado
 FROM 
     Clientes C
     JOIN Pedidos P ON C.IDCliente = P.IDCliente
