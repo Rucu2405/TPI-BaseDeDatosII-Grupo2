@@ -5,10 +5,10 @@ SELECT
     T.DescripcionTalle AS Talle,
     COUNT(DISTINCT P.IDPedido) AS CantidadPedidos,
     SUM(DP.Cantidad) AS UnidadesVendidas,
-    SUM(PR.Precio * DP.Cantidad) AS VentasBrutas,
-    SUM((PR.Precio * DP.Cantidad) * ISNULL(V.Descuento, 0) / 100) AS TotalDescuentos,
-    SUM((PR.Precio * DP.Cantidad) - ((PR.Precio * DP.Cantidad) * ISNULL(V.Descuento, 0) / 100)) AS VentasNetas,
-    ROUND(AVG(PR.Precio), 2) AS PrecioPromedioPorUnidad
+    '$ ' + CONVERT(VARCHAR, CAST(SUM(PR.Precio * DP.Cantidad) AS MONEY), 1) AS VentasBrutas,
+    '$ ' + CONVERT(VARCHAR, CAST(SUM((PR.Precio * DP.Cantidad) * ISNULL(V.Descuento, 0) / 100) AS MONEY), 1) AS TotalDescuentos,
+    '$ ' + CONVERT(VARCHAR, CAST(SUM((PR.Precio * DP.Cantidad) - ((PR.Precio * DP.Cantidad) * ISNULL(V.Descuento, 0) / 100)) AS MONEY), 1) AS VentasNetas,
+    '$ ' + CONVERT(VARCHAR, CAST(ROUND(AVG(PR.Precio), 2) AS MONEY), 1) AS PrecioPromedioPorUnidad
 FROM 
     Pedidos P
     INNER JOIN DetallePedido DP ON P.IDPedido = DP.IDPedido
