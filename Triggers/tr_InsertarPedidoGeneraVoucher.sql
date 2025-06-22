@@ -3,7 +3,6 @@ ON Pedidos
 AFTER INSERT
 AS
 BEGIN
-    SET NOCOUNT ON;
 
     DECLARE @IDCliente INT;
     DECLARE @IDPedido INT;
