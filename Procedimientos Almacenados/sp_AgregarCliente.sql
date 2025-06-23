@@ -1,20 +1,19 @@
 CREATE OR ALTER PROCEDURE sp_AgregarCliente
 (
-    @DNI_Cliente VARCHAR(15) = NULL,
-    @Nombre VARCHAR(50) = NULL,
-    @Apellido VARCHAR(50) = NULL,
-    @Direccion VARCHAR(100) = NULL,
-    @CP VARCHAR(10) = NULL,
-    @FechaNacimiento DATE = NULL,
-    @Mail VARCHAR(100) = NULL
+    @DNI_Cliente INT,
+    @Nombre VARCHAR(50),
+    @Apellido VARCHAR(50),
+    @Direccion VARCHAR(100),
+    @CP SMALLINT,
+    @FechaNacimiento DATE,
+    @Mail VARCHAR(255)
 )
 AS
 BEGIN
     BEGIN TRY
-      --Declaro variable mensaje 
-        DECLARE @mensaje VARCHAR(4000)
+        DECLARE @mensaje VARCHAR(255)
 
-       --validamos que se envíen los parámetros obligatorios
+        -- Validaciones obligatorias
         IF @DNI_Cliente IS NULL
         BEGIN
             RAISERROR('Debe ingresar el DNI del cliente.', 16, 1)
@@ -33,33 +32,33 @@ BEGIN
             RETURN
         END
 
-        -- Validación adicional para DNI (ejemplo: longitud mínima) 
-        IF LEN(@DNI_Cliente) < 8
+        -- Validación básica de longitud (opcional)
+        IF LEN(CAST(@DNI_Cliente AS VARCHAR)) < 8
         BEGIN
-            RAISERROR('El DNI debe tener al menos 8 caracteres.', 16, 1)
+            RAISERROR('El DNI debe tener al menos 8 dígitos.', 16, 1)
             RETURN
         END
 
-       --Verificamos que el DNI no exista 
+        -- Verificar existencia
         IF EXISTS (SELECT 1 FROM Clientes WHERE DNI_Cliente = @DNI_Cliente)
         BEGIN
-            SET @mensaje = 'El cliente con DNI ' + @DNI_Cliente + ' ya existe.' + CHAR(13) + CHAR(10) + 
-                          'Verifique los clientes existentes con (SELECT * FROM Clientes)'
+            SET @mensaje = 'El cliente con DNI ' + CAST(@DNI_Cliente AS VARCHAR) + ' ya existe.' + CHAR(13) + CHAR(10) + 
+                           'Verifique los clientes existentes con (SELECT * FROM Clientes)'
             RAISERROR(@mensaje, 12, 1)
             RETURN
         END
 
-        -- Validación básica de email si se proporciona 
-        IF @Mail IS NOT NULL AND @Mail NOT LIKE '%_@__%.__%'
+        -- Validación de email
+        IF @Mail NOT LIKE '%_@__%.__%'
         BEGIN
             RAISERROR('El formato del email no es válido.', 16, 1)
             RETURN
         END
 
-       -- Si está todo correcto, insertamos el cliente 
+        -- Inserción
         INSERT INTO Clientes (DNI_Cliente, Nombre, Apellido, Direccion, CP, FechaNacimiento, Mail)
         VALUES (@DNI_Cliente, @Nombre, @Apellido, @Direccion, @CP, @FechaNacimiento, @Mail)
-        
+
         PRINT 'Cliente agregado correctamente.'
         
     END TRY
@@ -67,4 +66,6 @@ BEGIN
         PRINT ERROR_MESSAGE()
     END CATCH
 END
+
+
 
